@@ -56,7 +56,7 @@
         public static Color ToDarker(Color color)
         {
             var hsv = RgbToHsv(new Rgb() { R = color.R, G = color.G, B = color.B });
-            hsv.V -= 20;
+            hsv.V = hsv.V > 20 ? hsv.V - 20 : 0;
             var rgb = HsvToRgb(hsv);
             return Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }
@@ -69,7 +69,7 @@
         public static Color ToDark(Color color)
         {
             var hsv = RgbToHsv(new Rgb() { R = color.R, G = color.G, B = color.B });
-            hsv.V -= 10;
+            hsv.V = hsv.V > 10 ? hsv.V - 10 : 0;
             var rgb = HsvToRgb(hsv);
             return Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }
@@ -82,7 +82,8 @@
         public static Color ToLight(Color color)
         {
             var hsv = RgbToHsv(new Rgb() { R = color.R, G = color.G, B = color.B });
-            hsv.S -= 20;
+            hsv.S = hsv.S > 20 ? hsv.S - 20 : 0;
+            hsv.V = hsv.V > 90 ? 100 : hsv.V + 10;
             var rgb = HsvToRgb(hsv);
             return Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }
@@ -95,7 +96,8 @@
         public static Color ToLighter(Color color)
         {
             var hsv = RgbToHsv(new Rgb() { R = color.R, G = color.G, B = color.B });
-            hsv.S -= 40;
+            hsv.S = hsv.S > 40 ? hsv.S - 40 : 0;
+            hsv.V = hsv.V > 80 ? 100 : hsv.V + 20;
             var rgb = HsvToRgb(hsv);
             return Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }
@@ -121,9 +123,9 @@
         private static Hsv RgbToHsv(Rgb rgb)
         {
             Hsv hsv = new();
-            float r = rgb.R / 255F;
-            float g = rgb.G / 255F;
-            float b = rgb.B / 255F;
+            float r = rgb.R / 255f;
+            float g = rgb.G / 255f;
+            float b = rgb.B / 255f;
             float max = Math.Max(Math.Max(r, g), b);
             float min = Math.Min(Math.Min(r, g), b);
             float delta = max - min;
@@ -166,7 +168,7 @@
             float v = hsv.V / 100f;
             if (s == 0)
             {
-                rgb.R = rgb.B = rgb.B = (int)Math.Round(v * 100f);
+                rgb.R = rgb.G = rgb.B = (int)Math.Round(v * 255);
             }
             else
             {
