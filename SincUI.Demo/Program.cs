@@ -1,16 +1,14 @@
+using SincUI.Forms;
+
 namespace SincUI.Demo
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            SincSplasher.Show(typeof(Splash));
             Application.Run(new MainForm());
         }
     }
